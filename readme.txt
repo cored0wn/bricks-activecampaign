@@ -4,10 +4,10 @@ Requires at least: 6.0
 Tested up to: 7.0
 Stable tag: 1.0.0
 Requires PHP: 8.0
-License: GNU AGPLv3
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
+License: AGPL-3.0-or-later
+License URI: https://www.gnu.org/licenses/agpl-3.0.html
 
-Connects a Bricks Builder form to an ActiveCampaign newsletter form — including double opt-in, automations and list assignments, without any duplicate configuration in WordPress.
+Connects Bricks Builder forms to ActiveCampaign newsletter signups via native form submission — no API key required.
 
 == Description ==
 

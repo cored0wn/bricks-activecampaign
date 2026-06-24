@@ -4,7 +4,7 @@
  * Description: Connects Bricks Builder Forms with ActiveCampaign for newsletter sign-ups.
  * Version:     1.0.0
  * Author:      wittor.IT
- * License:     GNU AGPLv3
+ * License:     AGPL-3.0-or-later
  * Text Domain: bricks-activecampaign
  */
 
