@@ -32,20 +32,15 @@ class Bricks_AC_Admin_Settings {
         $label_url = esc_html__( 'ActiveCampaign: Account URL', 'bricks-activecampaign' );
         $desc_url  = esc_html__( 'E.g. https://youraccount.api-us1.com — find it in AC under Settings > Developer. No API key needed.', 'bricks-activecampaign' );
 
-        // language=HTML
-        $rows = <<<HTML
-<tr>
-    <th><label for="apiUrlActiveCampaign">{$label_url}</label></th>
-    <td>
-        <input type="text" name="apiUrlActiveCampaign" id="apiUrlActiveCampaign"
-               value="{$api_url_esc}" spellcheck="false" class="regular-text"
-               placeholder="https://youraccount.api-us1.com">
-        <p class="description">{$desc_url}</p>
-    </td>
-</tr>
-HTML;
-
-        $rows_json = wp_json_encode( $rows );
+        $rows = '<tr>'
+            . '<th><label for="apiUrlActiveCampaign">' . $label_url . '</label></th>'
+            . '<td>'
+            . '<input type="text" name="apiUrlActiveCampaign" id="apiUrlActiveCampaign"'
+            . ' value="' . $api_url_esc . '" spellcheck="false" class="regular-text"'
+            . ' placeholder="https://youraccount.api-us1.com">'
+            . '<p class="description">' . $desc_url . '</p>'
+            . '</td>'
+            . '</tr>';
         ?>
         <script>
         (function () {
@@ -53,7 +48,7 @@ HTML;
             if (!tbody) return;
 
             var tmp = document.createElement('tbody');
-            tmp.innerHTML = <?php echo $rows_json; ?>;
+            tmp.innerHTML = <?php echo wp_json_encode( $rows ); ?>;
             while (tmp.firstChild) tbody.appendChild(tmp.firstChild);
         })();
         </script>

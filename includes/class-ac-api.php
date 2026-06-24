@@ -85,7 +85,7 @@ class Bricks_AC_API {
             return '';
         }
 
-        $host    = (string) parse_url( $this->api_url, PHP_URL_HOST );
+        $host    = (string) wp_parse_url( $this->api_url, PHP_URL_HOST );
         $account = strstr( $host, '.', true );
 
         return $account ? "https://{$account}.activehosted.com/proc.php" : '';
