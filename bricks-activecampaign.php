@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: Bricks ActiveCampaign Newsletter
- * Description: Verbindet Bricks Builder Forms mit ActiveCampaign für Newsletter-Anmeldungen.
+ * Description: Connects Bricks Builder Forms with ActiveCampaign for newsletter sign-ups.
  * Version:     1.0.0
  * Author:      wittor.IT
- * License:     GPL-2.0+
+ * License:     GNU AGPLv3
  * Text Domain: bricks-activecampaign
  */
 
