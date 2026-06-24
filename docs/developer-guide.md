@@ -159,9 +159,28 @@ $email_key = 'form-field-' . sanitize_key( $settings['acEmailField'] ?? '' );
 $email     = sanitize_email( $fields[ $email_key ] ?? '' );
 ```
 
-### Why proc.php instead of the API
+### Why proc.php instead of the REST API
 
-Using the REST API (`POST /contact/sync` + `POST /contactLists`) requires managing list IDs, status codes for double opt-in, and manual automation triggers. The `proc.php` endpoint replicates a native form submission — AC handles all of that internally, including the opt-in confirmation email. This mirrors how Elementor and other page builders integrate with AC.
+ActiveCampaign's REST API gives you fine-grained control over contacts, lists and automations, but that control comes at a cost: **you have to rebuild everything the AC form already knows how to do.**
+
+A complete REST-based signup flow requires at least four separate API calls:
+
+1. `POST /api/3/contact/sync` — create or update the contact
+2. `POST /api/3/contactLists` — subscribe the contact to one or more lists, with `status: 0` if double opt-in is desired
+3. `POST /api/3/tags` + `POST /api/3/contactTags` — look up or create each tag and attach it to the contact
+4. `POST /api/3/contactAutomations` — enrol the contact in an automation to trigger the DOI confirmation email
+
+Each of those steps requires a piece of configuration that has to be duplicated in WordPress: the list ID, the tag names, the automation ID. If the AC account changes — a list is renamed, an automation is rebuilt, a tag is retired — the WordPress settings have to be updated separately. The two systems drift apart.
+
+There is also a problem with double opt-in via the REST API. Setting `status: 0` on a list subscription marks the contact as unconfirmed, but **it does not automatically send a confirmation email**. That only happens if the list has the "Send opt-in confirmation email" option enabled *and* the contact is added in a way AC recognises as a form submission. Triggering it reliably through the API alone requires an additional automation enrolment step, and even then the behaviour depends on list-level settings the plugin cannot inspect.
+
+`proc.php` sidesteps all of this. It is the same endpoint AC's own embedded forms POST to when a visitor fills them out on an external site. From AC's perspective, a `proc.php` submission is indistinguishable from a native form submission, so:
+
+- DOI confirmation emails fire exactly as configured in the form and list settings — no extra automation needed
+- List subscriptions, tag assignments and automation enrolments all happen automatically, driven by the AC form configuration
+- No API key is required — `proc.php` is a public endpoint
+
+The trade-off is that all subscription logic lives in AC rather than in WordPress. That is intentional: it means a marketing team can change lists, tags or automations inside AC without touching the WordPress plugin, and the behaviour updates immediately.
 
 ### URL derivation
 
